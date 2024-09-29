@@ -1,3 +1,5 @@
 export { default as Home } from './Home'
 export { default as Auth } from './Auth'
-export { default as Todo } from './Todo'
+export { default as Tracker } from './Tracker'
+export { default as Profile } from './profile'
+export { default as Udet } from './userDetails'

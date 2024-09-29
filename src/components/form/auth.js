@@ -29,19 +29,21 @@ const AuthForm = ({ isAccount, setIsAccount }) => {
                 setIsAccount(true);
                 toast.success("Account created successfully");
             } else if (isAccount) {
-                // login
                 const userCredentials = await signInWithEmailAndPassword(auth, data.email, data.password);
                 reset();
                 toast.success("Login successfully");
                 const token = await userCredentials.user.getIdToken(true);
-                Cookies.set("token", token);
-                navigate("/todo");
+                Cookies.set("token", token, { expires: 1 });
+
+                navigate("/tracker");
             }
         } catch (error) {
             reset();
             toast.error(error.message);
         }
     };
+
+
 
     return (
         <>

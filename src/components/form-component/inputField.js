@@ -2,7 +2,7 @@ import React from 'react'
 import { TextField } from '@mui/material'
 import PropTypes from 'prop-types'
 
-const InputField = ({ type, label, register, errors, name }) => {
+const InputField = ({ type, label, register, errors, name, ...rest }) => {
     return (
         <>
             <TextField type={type} label={label} name={name} variant='outlined' fullWidth {...register(name)} helperText={errors?.message} error={!!errors} sx={{
@@ -21,7 +21,13 @@ const InputField = ({ type, label, register, errors, name }) => {
                 "& .MuiInputLabel-root": {
                     color: "white", // Label color
                 },
-            }} />
+            }}
+                {...rest}
+                InputProps={{
+                    ...(type === 'file' && { inputProps: { accept: 'image/*' } }),
+                }}
+
+            />
         </>
     )
 }
@@ -31,7 +37,7 @@ InputField.propTypes = {
     label: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     register: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object
 }
 
 export default InputField
