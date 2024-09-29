@@ -58,7 +58,9 @@ const Header = () => {
     return (
         <>
             {
-                location.pathname === '/tracker' && isMobile && <header className='fixed-top bg--secondary' >
+                ((location.pathname === '/tracker' && isMobile) ||
+                    ((location.pathname === '/' || location.pathname === '/auth') && (isDesktop || isTablet)))
+                && <header className='fixed-top bg--secondary' >
                     <nav>
                         <Container maxWidth="xxl" className='d-flex justify-content-between align-items-center'>
                             <Box display={'flex'} gap={2} alignItems={'center'}>
