@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useContext, useLayoutEffect, useState } from 'react'
 import { useNavigate, useLocation, } from 'react-router-dom';
 import { Menu } from '@mui/icons-material'
 import { Avatar, Box, Button, Container, IconButton, List, ListItem, ListItemButton, Popover, Typography } from '@mui/material'
@@ -7,10 +7,10 @@ import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import { doc, onSnapshot } from 'firebase/firestore';
 import useBreakpoints from '../../../hooks/useBreakpoint'
-import Sidebar from '../sidebar';
+import { TabContext } from '../../../context/tabContext';
 
 const Header = () => {
-    const [selectedTab, setSelectedTab] = useState(1)
+    const { setSelectedTab } = useContext(TabContext)
     const [menuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
     const { isMobile, isTablet, isDesktop } = useBreakpoints();
@@ -59,8 +59,9 @@ const Header = () => {
         <>
             {
                 ((location.pathname === '/tracker' && isMobile) ||
-                    ((location.pathname === '/' || location.pathname === '/auth') && (isDesktop || isTablet)))
-                && <header className='fixed-top bg--secondary' >
+                    ((location.pathname === '/' || location.pathname === '/auth') && (isDesktop || isTablet || isMobile)))
+                && <header className={`fixed-top bg--secondary ${location?.pathname !== '/tracker' ? 'py-3' : 'py-0'}`} >
+
                     <nav>
                         <Container maxWidth="xxl" className='d-flex justify-content-between align-items-center'>
                             <Box display={'flex'} gap={2} alignItems={'center'}>
@@ -92,7 +93,14 @@ const Header = () => {
                             }
                             {
                                 menuOpen && <Box className={`drawer ${menuOpen ? 'open' : ''} bg--secondary`}>
-                                    <Sidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+                                    <List>
+                                        <ListItem>
+                                            <ListItemButton onClick={() => { setSelectedTab(1); setMenuOpen(false) }} className='text-white'>Dashboard</ListItemButton>
+                                        </ListItem>
+                                        <ListItem>
+                                            <ListItemButton onClick={() => { setSelectedTab(2); setMenuOpen(false) }} className='text-white'>Expense</ListItemButton>
+                                        </ListItem>
+                                    </List>
                                 </Box>
                             }
                         </Container>

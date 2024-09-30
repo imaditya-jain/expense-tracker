@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Box, List, ListItem, ListItemButton } from '@mui/material'
+import { TabContext } from '../context/tabContext'
 
-const DashboardNavigate = ({ setSelectedTab, selectedTab }) => {
+const DashboardNavigate = () => {
+    const { setSelectedTab } = useContext(TabContext)
     return (
         <>
             <Box mt={2} className="dashboard-navigate">
@@ -11,9 +13,6 @@ const DashboardNavigate = ({ setSelectedTab, selectedTab }) => {
                     </ListItem>
                     <ListItem>
                         <ListItemButton onClick={() => setSelectedTab(2)} className='text-white'>Expense</ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemButton onClick={() => setSelectedTab(3)} className='text-white'>Profile</ListItemButton>
                     </ListItem>
                 </List>
             </Box>

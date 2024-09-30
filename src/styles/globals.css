@@ -228,6 +228,10 @@ a {
     color: #fff;
 }
 
+.homeContainer {
+    height: 89.5vh;
+}
+
 @media only screen and (max-width: 600px) {
     .dashboard-layout-wrapper {
         padding: 1rem;
